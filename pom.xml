@@ -50,7 +50,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         
         <!-- Es sind keine Tests erforderlich -->
-        <skipTests>true</skipTests>
+        <skipTests>false</skipTests>
     </properties>
     
     <!-- Setzt Spring Boot einerseits und Camunda anderseits als massgebend für die Verwaltung der Abhängigkeiten in Maven -->
@@ -63,7 +63,26 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            
+            <!-- Importiert Komponenent fürs Testing. Die dritte Dependency ist notwendig,
+ weil die standardmässig geladene 3.9.1-Version einen Bug verursacht. Details siehe
+ https://github.com/camunda/camunda-bpm-assert/issues/90 -->
+ <dependency>
+ <groupId>org.springframework.boot</groupId>
+ <artifactId>spring-boot-starter-test</artifactId>
+ <scope>test</scope>
+ </dependency>
+ <dependency>
+ <groupId>org.camunda.bpm.extension</groupId>
+ <artifactId>camunda-bpm-assert</artifactId>
+ <version>2.0-SNAPSHOT</version>
+ <scope>test</scope>
+ </dependency>
+ <dependency>
+ <groupId>org.assertj</groupId>
+ <artifactId>assertj-core</artifactId>
+ <version>1.7.1</version>
+ <scope>test</scope>
+ </dependency>
             <dependency>
                 <groupId>org.camunda.bpm</groupId>
                 <artifactId>camunda-bom</artifactId>
@@ -111,6 +130,13 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.camunda.bpm.springboot</groupId>
+            <artifactId>camunda-bpm-spring-boot-starter-test</artifactId>
+            <version>2.3.0</version>
+            <scope>test</scope>
+            <type>jar</type>
         </dependency>
     </dependencies>
     
